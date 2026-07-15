@@ -7,7 +7,7 @@ from sklearn.model_selection import GroupShuffleSplit
 from features import load_wav, speech_before, frame_energy_db, f0_contour
 
 def extract_features(x, sr, pause_start):
-    # Context thoda bada karte hain taaki robust pattern mile
+  
     seg = speech_before(x, sr, pause_start, window_s=1.5)
     if len(seg) < sr // 10:
         return np.zeros(7, dtype=np.float32)
@@ -69,7 +69,7 @@ def main():
 
     tr, te = next(GroupShuffleSplit(n_splits=1, test_size=0.25, random_state=0).split(X, y, groups))
     
-    # Thodi si tree depth badha rahe hain naye features ko accomodate karne ke liye
+  
     clf = RandomForestClassifier(n_estimators=200, max_depth=7, min_samples_leaf=3, random_state=0, class_weight="balanced")
     clf.fit(X[tr], y[tr])
     print(f"held-out turn accuracy: {clf.score(X[te], y[te]):.3f}")
